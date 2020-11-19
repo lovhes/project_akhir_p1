@@ -7,7 +7,8 @@ class Controller{
     
     static mainPage(req, res){
         // console.log(req.session)
-        res.render("mainPage")
+        
+        res.render("mainPage", req)
     }
 
     static listBooks(req, res){
@@ -78,14 +79,61 @@ class Controller{
 
 
     static showUser(req,res) {
-        // Cast.findAll()
-        //     .then(data => {
-        //         res.render("showUsers")
-        //     })
-        //     .catch(err => {
-        //         res.send(err)
-        //     })
-        res.render('showUsers')
+        User.findAll()
+            .then(data => {
+                res.render("showUsers", {data})
+            })
+            .catch(err => {
+                res.send(err)
+            })
+        // res.render('showUsers')
+    }
+    static editDataById(req, res) {
+        let id = +req.params.id
+        User.findByPk(id)
+            .then(data => { 
+                console.log(data)
+                res.render("editUserForm", {data})
+            })
+            .catch(err => {
+                res.send(err)
+            })
+
+    }
+    static editDataUser(req, res) {
+        let id = +req.params.id
+        let objCast = {
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            username: req.body.username,
+            
+        }
+
+        User.update(objCast, {
+            where: {
+                id
+            }
+        })
+            .then(data => {
+                res.redirect("/showuser")
+            })
+            .catch(err => {
+                res.send(err)
+            })
+    }
+    static deleteDataById(req, res) {
+        let id = +req.params.id
+        User.destroy({
+            where: {
+                id
+            }
+        })
+        .then(data => {
+            res.redirect("/showuser")
+        })
+        .catch(err => {
+            res.send(err)
+        })
     }
 
     static doLogout(req, res) {
