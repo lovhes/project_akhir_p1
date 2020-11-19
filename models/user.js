@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.belongsToMany(models.Book, {through: models.Review})
+    }
+    getFullName(){
+      return `${this.first_name} ${this.last_name}`
     }
   };
   User.init({
