@@ -1,4 +1,4 @@
-const {Book, User, Sequelize} = require("../models/index")
+const {Book, User, Sequelize, Review} = require("../models/index")
 const { hashCheck } = require('../helper/password')
 const {or} = Sequelize.Op;
 
@@ -149,9 +149,11 @@ class Controller{
         })
     }
     static profile(req, res){
-        User.findAll()
+        User.findByPk(req.session.userId)  
         .then(data=>{
+            // console.log(data)
             res.render("userProfile", {data})
+            // res.send(req.session)
         })
         .catch(e=>{
             res.send(e)
@@ -184,47 +186,24 @@ class Controller{
             res.send(e)
         })
     }
-    // static getAddMovieCast(req, res){
-    //     let id = req.params.id
-    //     let error = null
-    //     if (req.query.error) {
-    //         error = req.query.error
-    //     }
-    //     let founded
-    //     Movie.findByPk(id, {
-    //         include: [Cast]
-    //     })
-    //     .then(data=>{
-    //         founded = data
-    //         return Cast.findAll({
-    //             include: [Movie]
-    //         })
-    //     })
-    //     .then(data=>{
-    //         res.render("movieAddCast", {data, founded, error})
-    //         // console.log(data)
-    //         // res.send(founded)
-    //     })
-    //     .catch(e=>{
-    //         res.send(e)
-    //     })
-    // }
     static postAddReview(req, res){
         // console.log(req.body)
         let id = req.params.id
-        let dataUser
-        User.findAll()
-        .then(data=>{
-            dataUser = data
-            let obj = {
-                rating: req.body.rating,
-                review: req.body.review,
-                BookId: id,
-                UserId: dataUser[0].id
-            }
-            // console.log(obj)
-            return Review.create(obj)
-        })
+        // let dataUser
+        let obj = {
+            rating: req.body.rating,
+            review: req.body.review,
+            BookId: id,
+            UserId: req.session.userId
+        }
+        Review.create(obj)
+        // User.findAll()
+        // .then(data=>{
+        //     dataUser = data
+            
+        //     // console.log(obj)
+        //     return Review.create(obj)
+        // })
         .then(data=>{
             res.redirect(`/addReview/${id}`)
         })
