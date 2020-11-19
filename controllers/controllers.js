@@ -3,6 +3,12 @@ const { hashCheck } = require('../helper/password')
 const {or} = Sequelize.Op;
 
 class Controller{
+    
+    static mainPage(req, res){
+        console.log(req.session)
+        res.render("mainPage")
+    }
+
     static listBooks(req, res){
         Book.findAll()
         .then(data=>{
@@ -13,10 +19,7 @@ class Controller{
         })
     }
 
-    static mainPage(req, res){
-        
-        res.render("mainPage")
-    }
+    
 
     static registerForm(req, res){
         res.render('registerForm')
@@ -58,8 +61,9 @@ class Controller{
         })
         .then(user => {
             if(user && hashCheck(password, user.password)) {
-                res.send(`welcome ${user.first_name} ${user.last_name}`)
-                // res.send('correct')
+                req.session.userId = user.id;
+                // res.send(`welcome ${user.first_name} ${user.last_name}`)
+                res.redirect('/')
             }
             else{
                 res.send(`wrong username or password`)
@@ -81,6 +85,16 @@ class Controller{
         //         res.send(err)
         //     })
         res.render('showUsers')
+    }
+
+    static doLogout(req, res) {
+        req.session.destroy(function(err) {
+            if(err) {
+                res.send('you got error')
+            } else {
+                res.redirect('/')
+            }
+          })
     }
 }
 
