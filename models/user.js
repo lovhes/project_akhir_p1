@@ -1,4 +1,5 @@
 'use strict';
+const mailing = require("../mailer")
 const { hashPass } =require('../helper/password')
 const {
   Model
@@ -33,5 +34,10 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
   });
+
+  User.afterCreate((instance, options)=>{
+    console.log(instance.email)
+    mailing(instance.email)
+  })
   return User;
 };
