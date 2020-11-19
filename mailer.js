@@ -8,12 +8,12 @@ function mailing(data){
           pass: 'hacktiv8'
         }
       });
-      console.log("=================================>" + data)
+      
       var mailOptions = {
         from: 'testingprojecthacktiv@gmail.com',
         to: `${data}`,
         subject: 'Anda telah terdaftar di reviewBook',
-        text: 'http://localhost:3000/'
+        text: 'https://desolate-garden-58832.herokuapp.com/'
       };
       
       transporter.sendMail(mailOptions, function(error, info){
