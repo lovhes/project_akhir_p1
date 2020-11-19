@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Show Users</title>
+</head>
+<body>
+  <a href="/">Home</a> <br>
+<table border="1">
+  <thead>
+    <tr>
+        <th>Name</th>
+        <th>username</th>
+        <th>email</th>
+        <th>action</th>
+        
+    </tr>
+</thead>
+<tbody>
+  <% for(let i = 0; i < data.length; i++) { %>
+      <tr>
+          <td><%= data[i].first_name %> <%= data[i].last_name %></td>
+          <td><%= data[i].username %></td>
+          <td><%= data[i].email %></td>
+          <td>
+              <a href="/edit/<%= data[i].id %>">Edit</a> ||
+              <a href="/delete/<%= data[i].id %>" onclick="return confirm('are you sure?')" >Delete</a>
+              
+          </td>
+      </tr>
+  <% } %> 
+  </tbody>
+</table>
+</body>
+</html>
