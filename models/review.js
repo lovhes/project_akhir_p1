@@ -14,8 +14,30 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Review.init({
-    review: DataTypes.STRING,
-    rating: DataTypes.STRING
+    review: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: `review is required`
+        }
+      }},
+    rating: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty:{
+          msg: `rating is required`
+        },
+        min:{
+          args: 1,
+          msg: `rating must be greater than 0`
+        },
+        max:{
+          args: 5,
+          msg: `rating can't be greater than 5`
+        }
+      }},
+    UserId: DataTypes.INTEGER,
+    BookId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Review',
