@@ -115,7 +115,7 @@ class Controller{
             }
         })
             .then(data => {
-                res.redirect("/showuser")
+                res.redirect("/Profile")
             })
             .catch(err => {
                 res.send(err)
@@ -129,7 +129,7 @@ class Controller{
             }
         })
         .then(data => {
-            res.redirect("/showuser")
+            res.redirect("/logout")
         })
         .catch(err => {
             res.send(err)

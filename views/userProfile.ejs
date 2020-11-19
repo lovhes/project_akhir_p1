@@ -7,7 +7,14 @@
 </head>
 <body>
     <a href="/">Home</a> <br>
-    <h1 style="text-align: center;"><%= data.getFullName()%></h1>
+    <h1 style="text-align: center;">Hello <%= data.username%>!</h1>
+    
+    <p>Your name : <%= data.getFullName()%></p>
+    <p>Your email: <%= data.email %></p>
+
+    <a href="/edit/<%= data.id %>">Edit</a> ||
+    <a href="/delete/<%= data.id %>" onclick="return confirm('are you sure?')" >Delete</a>
+    
     
 </body>
 </html>
