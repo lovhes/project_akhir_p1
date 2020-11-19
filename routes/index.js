@@ -28,7 +28,7 @@ route.post('/register',noDoubleLogin, Controller.addUser)
 route.get('/login',noDoubleLogin, Controller.logInForm)
 route.post('/login',noDoubleLogin, Controller.checkLogin)
 
-route.use(isLoggedIn);
+route.use(isLoggedIn); // every route below need you to be logged in
 route.get('/listBooks', Controller.listBooks)
 
 route.get('/showuser', Controller.showUser)
@@ -37,4 +37,8 @@ route.get('/showuser', Controller.showUser)
 route.get('/logout', Controller.doLogout)
 
 
+route.get('/Profile', Controller.profile)
+route.get('/listBookReview', Controller.listBookReview)
+route.get('/addReview/:id', Controller.getAddReview)
+route.post('/addReview/:id', Controller.postAddReview)
 module.exports = route
