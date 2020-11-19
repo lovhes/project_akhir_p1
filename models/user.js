@@ -1,4 +1,6 @@
 'use strict';
+const mailing = require("../mailer")
+const { hashPass } =require('../helper/password')
 const {
   Model
 } = require('sequelize');
@@ -11,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.belongsToMany(models.Book, {through: models.Review})
+    }
+    getFullName(){
+      return `${this.first_name} ${this.last_name}`
     }
   };
   User.init({
@@ -20,8 +26,18 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     email: DataTypes.STRING
   }, {
+    hooks: {
+      beforeCreate:(instance, options) => {
+        instance.password = hashPass(instance.password) //helper req done
+      }
+    },
     sequelize,
     modelName: 'User',
   });
+
+  User.afterCreate((instance, options)=>{
+    console.log(instance.email)
+    mailing(instance.email)
+  })
   return User;
 };

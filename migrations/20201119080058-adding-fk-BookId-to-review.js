@@ -1,18 +1,18 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
+  up: (queryInterface, Sequelize) => {
     /**
      * Add altering commands here.
      *
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    return queryInterface.addColumn('Reviews', 'UserId', {
+    return queryInterface.addColumn('Reviews', 'BookId', {
       type: Sequelize.INTEGER,
       references:{
         model:{
-          tableName: "Users"
+          tableName: "Books"
         },
         key: 'id'
       },
@@ -21,13 +21,13 @@ module.exports = {
     })
   },
 
-  down: async (queryInterface, Sequelize) => {
+  down: (queryInterface, Sequelize) => {
     /**
      * Add reverting commands here.
      *
      * Example:
      * await queryInterface.dropTable('users');
      */
-    return queryInterface.removeColumn('Reviews', 'UserId')
+    return queryInterface.removeColumn('Reviews', 'BookId')
   }
 };

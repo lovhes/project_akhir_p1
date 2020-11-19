@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Book</title>
+</head>
+<body>
+    <a href="/">Home</a> <br>
+    <% let count = 0%>
+    <% for (let i=0; i<data.Users.length; i++) { %>
+        <% count += Number(data.Users[i].Review.rating) %>
+    <% } %>
+    <% count = count/data.Users.length %>
+
+    <h1 style="text-align: center;"><%= data.book_name %></h1>
+    <h2 style="text-align: center;">Rating: <%= count %></h2>
+    <img src="<%= data.cover_image %>" alt="" style="margin: auto; display: block;" width="200" height="300" >
+    <% if (error) { %>
+        <p style="color: cornflowerblue; text-align: center;"><%= error %></p>
+    <% } %>
+    <form action="/addReview/<%= data.id %>" method="post" style="text-align: center;">
+        <label for="rating">Add Rating</label><br>
+        <input type="number" name="rating"><br>
+        <label for="review">Add Review</label><br>
+        <input type="text" name="review"><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <h1 style="text-align: center;">List Review</h1>
+    <table style="width: 80%; margin: auto; text-align: center;" border="1">
+        <thead>
+            <tr>
+                <td>Username</td>
+                <td>Rating</td>
+                <td>Review</td>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i=0; i<data.Users.length; i++) { %>
+                <tr>
+                    <td><%= data.Users[i].username%></td>
+                    <td><%= data.Users[i].Review.rating %></td>
+                    <td><%= data.Users[i].Review.review %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+</html>

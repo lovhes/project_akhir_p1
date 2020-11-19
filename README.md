@@ -6,9 +6,9 @@ REQUIREMENT Pair Project: :pencil:
 1. CRUD   (CREATE, READ, UPDATE, DELETE)
 2. Association Many to many
 3. Class (Static METHOD DI MODEL) & Instance Method
-4. Helper
-5. Hooks
-6. Middleware
+4. Helper done with password
+5. Hooks done with password
+6. Middleware done with session
 7. SESSION / tentang login loginan
 8. MVP - FITUR UNGGULAN YANG MEMBEDAKAN PROJECT KALIAN DGN PROJECT LAIN / TEKNOLOGI YG BLM PERNAH DIAJARIN
 9. Deploy Heroku => https://medium.com/easyread/cara-deploy-express-dan-postrgres-ke-heroku-4b08e6bc1d64
