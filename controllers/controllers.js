@@ -1,11 +1,11 @@
-const {Book, User} = require("../models/index")
-
+const {Book, User, Sequelize} = require("../models/index")
+const { hashCheck } = require('../helper/password')
+const {or} = Sequelize.Op;
 
 class Controller{
     static listBooks(req, res){
         Book.findAll()
         .then(data=>{
-            // res.send(data)
             res.render("listBooks", {data})
         })
         .catch(err => {
@@ -34,7 +34,7 @@ class Controller{
 
         User.create(newUser)
         .then(_ => {
-            res.redirect('/login')
+            res.redirect('/')
         })
         .catch(err => {
             res.send(err)
@@ -48,11 +48,27 @@ class Controller{
     }
 
     static checkLogin(req,res){
-        const username = req.body.username;
+        const key = req.body.usernameOrEmail;
         const password = req.body.password;
-        const email = req.body.email;
 
-        res.send()
+        User.findOne({
+            where: {
+                [or]: [{username: key},{email: key}]
+            }
+        })
+        .then(user => {
+            if(user && hashCheck(password, user.password)) {
+                res.send(`welcome ${user.first_name} ${user.last_name}`)
+                // res.send('correct')
+            }
+            else{
+                res.send(`wrong username or password`)
+            }
+        })
+        .catch(err => {
+            res.send('something went error')
+        })
+        
     }
 
 

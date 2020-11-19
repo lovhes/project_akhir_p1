@@ -1,5 +1,5 @@
 'use strict';
-const hashPass =require('../helper/password')
+const { hashPass } =require('../helper/password')
 const {
   Model
 } = require('sequelize');
@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     hooks: {
       beforeCreate:(instance, options) => {
-        
         instance.password = hashPass(instance.password) //helper req done
       }
     },
